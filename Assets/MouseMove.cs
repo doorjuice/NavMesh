@@ -16,6 +16,19 @@ public class MouseMove : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
+            if (Physics.Raycast(ray, out hit))
+            {
+                var target = hit.collider.gameObject;
+                switch (target.tag)
+                {
+                    case "Door":
+                        //Destroy(target);
+                        var door = target.GetComponent<DoorController>();
+                        door.OnClick();
+                        break;
+                }
+            }
+
             if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Movable"))
             {
                 pikuniku.GetComponent<MeshRenderer>().material.color = Color.magenta;
